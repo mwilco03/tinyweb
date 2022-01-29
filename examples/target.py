@@ -4,7 +4,11 @@ import machine
 import network
 import tinyweb
 import gc
-
+import time
+from machine import Pin, I2C, ADC
+from time import sleep
+from tcs34725 import TCS34725
+from ssd1306 import SSD1306_I2C
 
 # PINs available for use
 pins = {4: 'D2',
