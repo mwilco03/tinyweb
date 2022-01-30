@@ -1,0 +1,65 @@
+<html>
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+<button id="btnGenerateTable">Generate Table</button>
+<br />
+<div id="parentHolder"></div>
+<button id="btnCalculate">Calculate</button>
+<br />
+<label>Average:</label>
+<label id="lblAverage"></label>
+<label>Max:</label>
+<label id="lblMax"></label>
+<script>
+$(document).ready(function(){
+ var bookDetails = [];
+     bookDetails.push(["Hit", "Time Stamp"]);
+
+  $("#btnGenerateTable").click(function(e){
+    var parentDiv = $("#parentHolder");
+    parentDiv.html("");
+    var aTable = $("<table>", { "id": "newTable" }).appendTo(parentDiv);
+    bookDetails.push([bookDetails.length, e.timeStamp])
+    var rowCount = bookDetails.length;
+    var colmCount = bookDetails[0].length;
+
+    // For loop for adding header .i.e th to our table
+    for (var k = 0; k < 1; k++) {
+        var fragTrow = $("<tr>", { "class": "trClass" }).appendTo(aTable);
+        for (var j = 0; j < colmCount; j++) 
+        {
+            $("<th>", {"class": "thClass"} ).prependTo(fragTrow).html(bookDetails[k][j]);
+        }
+    }
+
+    //For loop for adding data .i.e td with data to our dynamic generated table
+    for (var i = 1; i < rowCount; i < i++) 
+    {
+        var fragTrow = $("<tr>", { "class": "trClass" }).appendTo(aTable);
+        for (var j = 0; j < colmCount; j++) 
+        { 
+          $("<td>", { "class": "tdClass" }).appendTo(fragTrow).html(bookDetails[i][j]);
+        }
+    }
+    
+  });
+  $("#btnCalculate").click(function() {
+    var total = 0;
+    var highCount = 0;
+
+    $("table tr td.tdClass").each(function() {
+        total += Number($(this).text());
+        if (highCount < $(this).text()) 
+        {
+            highCount = $(this).text(); 
+        }
+    });
+     $("#lblMax").text(highCount);
+     $("#lblAverage").text(total / $("table tr td.tdClass").length);
+  });
+   
+});
+</script>
+                        
